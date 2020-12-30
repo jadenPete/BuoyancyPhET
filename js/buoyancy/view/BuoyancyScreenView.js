@@ -39,23 +39,26 @@ class BuoyancyScreenView extends ScreenView {
 			new Vector2(this.layoutBounds.width / 2, this.layoutBounds.height), 100, -100);
 
 		// Liquid
-		model.liquid.enableSubmersion(model.mass, modelViewTransform.viewToModelDeltaX(this.layoutBounds.width));
+		model.liquid.enableSubmersion(model.masses, modelViewTransform.viewToModelDeltaX(this.layoutBounds.width));
 
 		this.addChild(new LiquidNode(model.liquid, modelViewTransform, this.layoutBounds));
 
 		// Density Sliders
-		this.addChild(new LiquidDensitySlider(model.liquid.densityProperty));
-		this.addChild(new MassDensitySlider(model.mass.densityProperty));
+		this.addChild(new LiquidDensitySlider(BuoyancyConstants.LIQUID_DENSITY_SLIDER_POSITION, model.liquid.densityProperty));
+		this.addChild(new MassDensitySlider(BuoyancyConstants.MASS1_DENSITY_SLIDER_POSITION, model.masses[0].densityProperty));
+		this.addChild(new MassDensitySlider(BuoyancyConstants.MASS2_DENSITY_SLIDER_POSITION, model.masses[1].densityProperty));
 
-		// Mass
-		model.mass.initializeGravity(modelViewTransform.viewToModelBounds(new Bounds2(0, 0,
-			this.layoutBounds.maxX - modelViewTransform.modelToViewDeltaX(model.mass.size),
-			this.layoutBounds.maxY + modelViewTransform.modelToViewDeltaY(model.mass.size))), model.liquid); // modelToViewDeltaY is negative
+		// Masses
+		model.masses.forEach(mass => {
+			mass.initializeGravity(modelViewTransform.viewToModelBounds(new Bounds2(
+				0,
+				0,
+				this.layoutBounds.maxX - modelViewTransform.modelToViewDeltaX(mass.size),
+				this.layoutBounds.maxY + modelViewTransform.modelToViewDeltaY(mass.size))), model.liquid); // modelToViewDeltaY is negative
 
-		this.addChild(new MassNode(model.mass, modelViewTransform));
-
-		// Mass Forces
-		this.addChild(new MassForcesNode(model.mass, modelViewTransform));
+			this.addChild(new MassNode(mass, modelViewTransform));
+			this.addChild(new MassForcesNode(mass, modelViewTransform));
+		});
 
 		// Ruler
 		model.ruler.setInitialX(modelViewTransform.viewToModelX(this.layoutBounds.minX));
@@ -93,5 +96,5 @@ class BuoyancyScreenView extends ScreenView {
 	}
 }
 
-buoyancy.register( 'BuoyancyScreenView', BuoyancyScreenView );
+buoyancy.register('BuoyancyScreenView', BuoyancyScreenView);
 export default BuoyancyScreenView;

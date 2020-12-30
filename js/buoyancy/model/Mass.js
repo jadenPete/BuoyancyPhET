@@ -5,12 +5,12 @@ import BuoyancyUtils from '../../common/BuoyancyUtils.js';
 import buoyancy from '../../buoyancy.js';
 
 class Mass {
-	constructor(density) {
-		this.positionProperty = new Property(BuoyancyConstants.MASS_POSITION);
+	constructor(position, size, density) {
+		this.positionProperty = new Property(position);
 		this.velocityProperty = new Property(0);
 
-		this.size = BuoyancyConstants.MASS_SIZE;
-		this.densityProperty = new Property(BuoyancyConstants.MASS_DENSITY);
+		this.size = size;
+		this.densityProperty = new Property(density);
 		this.densityProperty.lazyLink(_ => this._updateGravityForce());
 
 		this.buoyancyForceProperty = new Property(0);

@@ -7,7 +7,7 @@ import BuoyancyConstants from '../../common/BuoyancyConstants.js';
 import buoyancy from '../../buoyancy.js';
 
 class MassDensitySlider extends Slider {
-	constructor(densityProperty) {
+	constructor(position, densityProperty) {
 		super(densityProperty, new Range(750, 2700), {
 			orientation: Orientation.VERTICAL,
 			trackSize: new Dimension2(BuoyancyConstants.SLIDER_HEIGHT, 5)
@@ -18,8 +18,8 @@ class MassDensitySlider extends Slider {
 		this.addMinorTick(2000, new Text("Brick"));
 		this.addMinorTick(2700, new Text("Aluminum"));
 
-		this.x = BuoyancyConstants.RULER_WIDTH + 170;
-		this.y = BuoyancyConstants.SLIDER_HEIGHT + 20;
+		this.x = BuoyancyConstants.RULER_WIDTH + position.x;
+		this.y = BuoyancyConstants.SLIDER_HEIGHT + position.y;
 	}
 }
 

@@ -5,6 +5,7 @@
  */
 
 import Tandem from '../../../../tandem/js/Tandem.js';
+import BuoyancyConstants from '../../common/BuoyancyConstants.js';
 import buoyancy from '../../buoyancy.js';
 import Liquid from './Liquid.js';
 import Mass from './Mass.js';
@@ -17,7 +18,11 @@ class BuoyancyModel {
 	constructor(tandem) {
 		assert && assert(tandem instanceof Tandem, 'invalid tandem');
 
-		this.mass = new Mass();
+		this.masses = [
+			new Mass(BuoyancyConstants.MASS1_POSITION, BuoyancyConstants.MASS1_SIZE, BuoyancyConstants.MASS1_DENSITY),
+			new Mass(BuoyancyConstants.MASS2_POSITION, BuoyancyConstants.MASS2_SIZE, BuoyancyConstants.MASS1_DENSITY)
+		];
+
 		this.liquid = new Liquid();
 		this.ruler = new Ruler();
 	}
@@ -28,7 +33,7 @@ class BuoyancyModel {
 	 */
 	reset() {
 		this.liquid.reset();
-		this.mass.reset();
+		this.masses.forEach(mass => mass.reset());
 		this.ruler.reset();
 	}
 
@@ -38,9 +43,9 @@ class BuoyancyModel {
 	 * @public
 	 */
 	step(dt) {
-		this.mass.step(dt);
+		this.masses.forEach(mass => mass.step(dt));
 	}
 }
 
-buoyancy.register( 'BuoyancyModel', BuoyancyModel );
+buoyancy.register('BuoyancyModel', BuoyancyModel);
 export default BuoyancyModel;

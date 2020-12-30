@@ -9,13 +9,24 @@ class Liquid {
 		this.densityProperty = new Property(BuoyancyConstants.LIQUID_DENSITY);
 	}
 
-	enableSubmersion(massObject, width) {
-		massObject.positionProperty.link(position => {
-			const submergedHeight = BuoyancyUtils.nearest_value(this.levelProperty.initialValue - (position.y - massObject.size), 0, massObject.size);
-			const submergedArea = submergedHeight * massObject.size;
+	_getLevelIncrease(massPosition, massSize) {
+		return BuoyancyUtils.nearest_value(this.levelProperty.initialValue - (massPosition.y - massSize), 0, massSize) * massSize / this.width;
+	}
 
-			this.levelProperty.set(this.levelProperty.initialValue + submergedArea / width);
-		});
+	enableSubmersion(masses, width) {
+		this.width = width;
+
+		// Set the initial level
+		this.levelProperty.set(masses.reduce((sum, mass) => {
+			return sum + this._getLevelIncrease(mass.positionProperty.value, mass.size);
+		}, this.levelProperty.value));		
+
+		// Adjust the level for a change in each mass's position
+		masses.forEach(mass => mass.positionProperty.lazyLink((oldPosition, newPosition) => {
+			this.levelProperty.set(this.levelProperty.value -
+				this._getLevelIncrease(oldPosition, mass.size) +
+				this._getLevelIncrease(newPosition, mass.size));
+		}));
 	}
 
 	reset() {

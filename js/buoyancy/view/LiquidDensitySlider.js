@@ -7,7 +7,7 @@ import BuoyancyConstants from '../../common/BuoyancyConstants.js';
 import buoyancy from '../../buoyancy.js';
 
 class LiquidDensitySlider extends Slider {
-	constructor(densityProperty) {
+	constructor(position, densityProperty) {
 		super(densityProperty, new Range(0, 1450.0), {
 			orientation: Orientation.VERTICAL,
 			trackSize: new Dimension2(BuoyancyConstants.SLIDER_HEIGHT, 5)
@@ -19,8 +19,8 @@ class LiquidDensitySlider extends Slider {
 		this.addMinorTick(997, new Text("Water"));
 		this.addMinorTick(1450, new Text("Honey"));
 
-		this.x = BuoyancyConstants.RULER_WIDTH + 75;
-		this.y = BuoyancyConstants.SLIDER_HEIGHT + 20;
+		this.x = BuoyancyConstants.RULER_WIDTH + position.x;
+		this.y = BuoyancyConstants.SLIDER_HEIGHT + position.y;
 	}
 }
 
