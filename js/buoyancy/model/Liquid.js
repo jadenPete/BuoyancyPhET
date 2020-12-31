@@ -19,10 +19,10 @@ class Liquid {
 		// Set the initial level
 		this.levelProperty.set(masses.reduce((sum, mass) => {
 			return sum + this._getLevelIncrease(mass.positionProperty.value, mass.size);
-		}, this.levelProperty.value));		
+		}, this.levelProperty.value));
 
 		// Adjust the level for a change in each mass's position
-		masses.forEach(mass => mass.positionProperty.lazyLink((oldPosition, newPosition) => {
+		masses.forEach(mass => mass.positionProperty.lazyLink((newPosition, oldPosition) => {
 			this.levelProperty.set(this.levelProperty.value -
 				this._getLevelIncrease(oldPosition, mass.size) +
 				this._getLevelIncrease(newPosition, mass.size));

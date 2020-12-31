@@ -6,7 +6,7 @@
  * @author Jaden Peterson
  */
 
-import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2 from '../../../dot/js/Vector2.js';
 import buoyancy from '../buoyancy.js';
 
 const BuoyancyConstants = {
