@@ -23,6 +23,9 @@ class BuoyancyModel {
 			new Mass(BuoyancyConstants.MASS2_POSITION, BuoyancyConstants.MASS2_SIZE, BuoyancyConstants.MASS1_DENSITY)
 		];
 
+		// Ew
+		this.masses.forEach(mass => mass.positionProperty.enableCollisionDetection(mass, this.masses));
+
 		this.liquid = new Liquid();
 		this.ruler = new Ruler();
 	}

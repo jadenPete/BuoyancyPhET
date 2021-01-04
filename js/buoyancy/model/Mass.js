@@ -4,9 +4,36 @@ import BuoyancyConstants from '../../common/BuoyancyConstants.js';
 import BuoyancyUtils from '../../common/BuoyancyUtils.js';
 import buoyancy from '../../buoyancy.js';
 
+class MassPositionProperty extends Property {
+	enableCollisionDetection(mass, other_masses) {
+		this.set = newPosition => {
+			const collidingMass = other_masses.find(other_mass => {
+				return other_mass !== mass &&
+					newPosition.x + mass.size > other_mass.positionProperty.value.x &&
+					newPosition.x < other_mass.positionProperty.value.x + other_mass.size &&
+					newPosition.y > other_mass.positionProperty.value.y - other_mass.size &&
+					newPosition.y - mass.size < other_mass.positionProperty.value.y;
+			});
+
+			if (collidingMass === undefined) {
+				super.set(newPosition);
+			} else {
+				super.set(newPosition.plusXY(...[
+					[collidingMass.positionProperty.value.x + collidingMass.size - newPosition.x, 0],
+					[collidingMass.positionProperty.value.x - mass.size - newPosition.x, 0],
+					[0, collidingMass.positionProperty.value.y + collidingMass.size - newPosition.y],
+					[0, collidingMass.positionProperty.value.y - mass.size - newPosition.y]
+				].reduce((min, current) => Math.abs(current[0]) + Math.abs(current[1]) < Math.abs(min[0]) + Math.abs(min[1]) ? current : min)));
+
+				mass.velocityProperty.set(collidingMass.velocityProperty.value);
+			}
+		};
+	}
+}
+
 class Mass {
 	constructor(position, size, density) {
-		this.positionProperty = new Property(position);
+		this.positionProperty = new MassPositionProperty(position);
 		this.velocityProperty = new Property(0);
 
 		this.size = size;
@@ -43,8 +70,8 @@ class Mass {
 				const newVelocity = this.velocityProperty.value + acceleration * (1 / BuoyancyConstants.FPS + dt);
 				const newPosition = this.positionProperty.value.plusXY(0, newVelocity * (1 / BuoyancyConstants.FPS + dt));
 
-				this.velocityProperty.set(this.positionBounds.containsPoint(newPosition) ? newVelocity : 0);
 				this.positionProperty.set(this.positionBounds.closestPointTo(newPosition));
+				this.velocityProperty.set(this.positionProperty.equalsValue(newPosition) ? newVelocity : 0);
 			} else {
 				this.buoyancyForceProperty.set(0);
 			}
