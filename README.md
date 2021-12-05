@@ -1,7 +1,7 @@
 Buoyancy
 ================
 
-Because my AP Computer Science A professor also taught physics, I designed this interactive PhET lab according his desired specifications to help his students visually comprehend buoyancy and buoyant forces. His classes utilize an instance deployed at https://phet.colorado.edu/sims/html/density/latest/density_en.html.
+Because my AP Computer Science A professor also taught physics, I designed this interactive PhET lab according his desired specifications to help his students visually comprehend buoyancy and buoyant forces. His classes utilize a [deployed instance](https://jadenpete.github.io/BuoyancyPhET-built/buoyancy_en_adapted-from-phet.html).
 
 NOTE: As of 2020, the University of Colorado, Boulder is developing a [more extensive lab](https://phet.colorado.edu/sims/html/density/latest/density_en.html).
 
