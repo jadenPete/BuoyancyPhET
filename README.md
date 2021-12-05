@@ -1,10 +1,9 @@
 Buoyancy
 ================
 
-"Buoyancy" is an educational simulation in HTML5, by <a href="https://phet.colorado.edu/" target="_blank">PhET Interactive Simulations</a>
-at the University of Colorado Boulder.
+Because my AP Computer Science A professor also taught physics, I designed this interactive PhET lab according his desired specifications to help his students visually comprehend buoyancy and buoyant forces. His classes utilize an instance deployed at https://phet.colorado.edu/sims/html/density/latest/density_en.html.
 
-*This simulation is under development and has not been published.*
+NOTE: As of 2020, the University of Colorado, Boulder is developing a [more extensive lab](https://phet.colorado.edu/sims/html/density/latest/density_en.html).
 
 ### Documentation
 The <a href="https://github.com/phetsims/phet-info/blob/master/doc/phet-development-overview.md" target="_blank">PhET Development Overview</a> is the most complete guide to PhET Simulation
@@ -12,4 +11,4 @@ Development. This guide includes how to obtain simulation code and its dependenc
 the sims, as well as other important information.
 
 ### License
-See the <a href="https://github.com/phetsims/buoyancy/blob/master/LICENSE" target="_blank">LICENSE</a>
+See the <a href="https://github.com/jadenPete/BuoyancyPhET/blob/master/LICENSE.txt" target="_blank">LICENSE</a>.
